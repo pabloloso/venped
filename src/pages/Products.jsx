@@ -8,7 +8,6 @@ import ProductsTable from '../partials/products/ProductsTable';
 import PaginationNumeric from '../components/PaginationNumeric';
 
 function Products() {
-
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
