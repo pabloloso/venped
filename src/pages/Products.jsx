@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 
-import Sidebar from '../partials/Sidebar';
-import Header from '../partials/Header';
-import SearchForm from '../partials/actions/SearchForm';
+import Sidebar from '../components/Sidebar';
+import Header from '../components/Header';
+import SearchForm from '../components/SearchForm';
 import FilterButton from '../components/DropdownFilter';
-import ProductsTable from '../partials/products/ProductsTable';
+import ProductsTable from '../components/ProductsTable';
 import PaginationNumeric from '../components/PaginationNumeric';
 
 function Products() {
@@ -36,7 +36,7 @@ function Products() {
               {/* Right: Actions */}
               <div className="grid grid-flow-col sm:auto-cols-max justify-start sm:justify-end gap-2">
                 {/* Search form */}
-                <SearchForm placeholder="Search by Product ID…" />
+                <SearchForm />
                 {/* Filter button */}
                 <FilterButton align="right" />
               </div>

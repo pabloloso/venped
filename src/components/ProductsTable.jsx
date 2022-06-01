@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
+
 import Products from './ProductsTableItem';
 
 function ProductsTable() {
-  const [list, setList] = useState([]);
+  const [productsData, setProductsData] = useState([]);
+  const [paginationData, setPaginationData] = useState({});
 
   useEffect(() => {
     fetch('http://vps-123eb2fc.vps.ovh.net/graphql', {
@@ -10,12 +12,22 @@ function ProductsTable() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         query: `
-          query { fetchProducts { results(page: 1, perPage: 10) { id, title, price, tax, stock } } }
+          query {
+            fetchProducts {
+              results(page: 1, perPage: 10) { id, title, price, tax, stock },
+              pagination(page: 1, perPage: 10) { totalResults, totalPages }
+            }
+          }
       `,
       }),
     })
       .then((response) => response.json())
-      .then((data) => setList(data.data.fetchProducts.results));
+      .then((data) => {
+        const { pagination, results } = data.data.fetchProducts;
+
+        setPaginationData(pagination);
+        setProductsData(results);
+      });
   }, []);
 
   return (
@@ -24,7 +36,7 @@ function ProductsTable() {
         <h2 className="font-semibold text-slate-800">
           Productos
           {' '}
-          <span className="text-slate-400 font-medium">{list.length}</span>
+          <span className="text-slate-400 font-medium">{paginationData.totalResults}</span>
         </h2>
       </header>
       <div>
@@ -51,7 +63,7 @@ function ProductsTable() {
             </thead>
             <tbody className="text-sm divide-y divide-slate-200">
               {
-                list.map((product) => (
+                productsData.map((product) => (
                   <Products
                     key={product.id}
                     id={product.id}
