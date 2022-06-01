@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 
 function AccordionBasic(props) {
-
   const [open, setOpen] = useState(false);
 
   return (

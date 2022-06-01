@@ -19,20 +19,6 @@ function App() {
     document.querySelector('html').style.scrollBehavior = '';
   }, [location.pathname]);
 
-  useEffect(() => {
-    fetch('http://vps-123eb2fc.vps.ovh.net/graphql', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        query: `
-        query { fetchProducts { results(page: 1, perPage: 1) { id } } }
-      `,
-      }),
-    })
-      .then((response) => response.json())
-      .then((data) => console.log(data));
-  }, []);
-
   return (
     <Routes>
       <Route exact path="/" element={<Products />} />
