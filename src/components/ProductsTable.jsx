@@ -1,42 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 
 import Products from './ProductsTableItem';
 
-function ProductsTable() {
-  const [productsData, setProductsData] = useState([]);
-  const [paginationData, setPaginationData] = useState({});
-
-  useEffect(() => {
-    fetch('http://vps-123eb2fc.vps.ovh.net/graphql', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        query: `
-          query {
-            fetchProducts {
-              results(page: 1, perPage: 10) { id, title, price, tax, stock },
-              pagination(page: 1, perPage: 10) { totalResults, totalPages }
-            }
-          }
-      `,
-      }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        const { pagination, results } = data.data.fetchProducts;
-
-        setPaginationData(pagination);
-        setProductsData(results);
-      });
-  }, []);
-
+function ProductsTable({ pagination, products }) {
   return (
     <div className="bg-white shadow-lg rounded-sm border border-slate-200 relative">
       <header className="px-5 py-4">
         <h2 className="font-semibold text-slate-800">
           Productos
           {' '}
-          <span className="text-slate-400 font-medium">{paginationData.totalResults}</span>
+          <span className="text-slate-400 font-medium">{pagination.totalResults}</span>
         </h2>
       </header>
       <div>
@@ -63,7 +37,7 @@ function ProductsTable() {
             </thead>
             <tbody className="text-sm divide-y divide-slate-200">
               {
-                productsData.map((product) => (
+                products.map((product) => (
                   <Products
                     key={product.id}
                     id={product.id}
@@ -81,5 +55,26 @@ function ProductsTable() {
     </div>
   );
 }
+
+ProductsTable.propTypes = {
+  pagination: PropTypes.shape({
+    currentPage: PropTypes.number,
+    firstPage: PropTypes.bool,
+    lastPage: PropTypes.bool,
+    limitValue: PropTypes.number,
+    nextPage: PropTypes.number,
+    outOfRange: PropTypes.bool,
+    prevPage: PropTypes.number,
+    totalPages: PropTypes.number,
+    totalResults: PropTypes.number,
+  }).isRequired,
+  products: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+    price: PropTypes.number.isRequired,
+    tax: PropTypes.string.isRequired,
+    stock: PropTypes.number.isRequired,
+  })).isRequired,
+};
 
 export default ProductsTable;
