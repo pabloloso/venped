@@ -121,7 +121,13 @@ function Products() {
     setPage(1);
   };
 
-  const getProductsUpdatedRequest = () => {
+  const firstUpdate = useRef(true);
+  useEffect(() => {
+    if (firstUpdate.current) {
+      firstUpdate.current = false;
+      return;
+    }
+
     const newRequest = {
       ...filters.length > 0 && { tax_filter: filters },
       ...searchCriteria !== '' && { title_filter: searchCriteria },
@@ -132,16 +138,6 @@ function Products() {
     };
 
     getProducts({ variables: newRequest });
-  };
-
-  const firstUpdate = useRef(true);
-  useEffect(() => {
-    if (firstUpdate.current) {
-      firstUpdate.current = false;
-      return;
-    }
-
-    getProductsUpdatedRequest();
   }, [filters, order, orderBy, page, searchCriteria]);
 
   if (loading || loadingResult) return 'Loading ....';
