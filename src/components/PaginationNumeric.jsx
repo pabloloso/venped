@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function PaginationNumeric({ pagination, handleChangeCurrentPage }) {
+function PaginationNumeric({ pagination, handleChangeCurrentPageCriteria }) {
   return (
     <>
       <div className="flex justify-center">
@@ -26,7 +26,7 @@ function PaginationNumeric({ pagination, handleChangeCurrentPage }) {
                 ${pagination.firstPage && 'cursor-not-allowed text-slate-300'}
               `}
               disabled={pagination.firstPage}
-              onClick={() => handleChangeCurrentPage(pagination.currentPage - 1)}
+              onClick={() => handleChangeCurrentPageCriteria(pagination.currentPage - 1)}
             >
               <span className="sr-only">Previous</span>
               <wbr />
@@ -36,7 +36,7 @@ function PaginationNumeric({ pagination, handleChangeCurrentPage }) {
             </button>
           </div>
           <ul className="inline-flex text-sm font-medium -space-x-px shadow-sm">
-            <button type="button" onClick={() => handleChangeCurrentPage(1)}>
+            <button type="button" onClick={() => handleChangeCurrentPageCriteria(1)}>
               <span
                 className={`
                   inline-flex
@@ -64,14 +64,14 @@ function PaginationNumeric({ pagination, handleChangeCurrentPage }) {
             )}
 
             {pagination.prevPage && pagination.prevPage >= 2 && (
-              <button type="button" onClick={() => handleChangeCurrentPage(pagination.prevPage)}>
+              <button type="button" onClick={() => handleChangeCurrentPageCriteria(pagination.prevPage)}>
                 <span className="inline-flex items-center justify-center leading-5 px-3.5 py-2 bg-white hover:bg-blue-500 border border-slate-200 text-slate-600 hover:text-white">
                   {pagination.prevPage}
                 </span>
               </button>
             )}
             {pagination.currentPage !== 1 && pagination.currentPage !== pagination.totalPages && (
-              <button type="button" onClick={() => handleChangeCurrentPage(pagination.currentPage)}>
+              <button type="button" onClick={() => handleChangeCurrentPageCriteria(pagination.currentPage)}>
                 <span
                   className={`
                   inline-flex
@@ -98,7 +98,7 @@ function PaginationNumeric({ pagination, handleChangeCurrentPage }) {
               </button>
             )}
             {pagination.nextPage && pagination.nextPage <= pagination.totalPages - 1 && (
-              <button type="button" onClick={() => handleChangeCurrentPage(pagination.nextPage)}>
+              <button type="button" onClick={() => handleChangeCurrentPageCriteria(pagination.nextPage)}>
                 <span className="inline-flex items-center justify-center leading-5 px-3.5 py-2 bg-white hover:bg-blue-500 border border-slate-200 text-slate-600 hover:text-white">
                   {pagination.nextPage}
                 </span>
@@ -111,7 +111,7 @@ function PaginationNumeric({ pagination, handleChangeCurrentPage }) {
               </li>
             )}
 
-            <button type="button" onClick={() => handleChangeCurrentPage(pagination.totalPages)}>
+            <button type="button" onClick={() => handleChangeCurrentPageCriteria(pagination.totalPages)}>
               <span
                 className={`
                   inline-flex
@@ -152,7 +152,7 @@ function PaginationNumeric({ pagination, handleChangeCurrentPage }) {
                 ${pagination.lastPage && 'cursor-not-allowed text-slate-300'}
               `}
               disabled={pagination.lastPage}
-              onClick={() => handleChangeCurrentPage(pagination.currentPage + 1)}
+              onClick={() => handleChangeCurrentPageCriteria(pagination.currentPage + 1)}
             >
               <span className="sr-only">Next</span>
               <wbr />
@@ -194,7 +194,7 @@ PaginationNumeric.propTypes = {
     totalPages: PropTypes.number,
     totalResults: PropTypes.number,
   }).isRequired,
-  handleChangeCurrentPage: PropTypes.func.isRequired,
+  handleChangeCurrentPageCriteria: PropTypes.func.isRequired,
 };
 
 export default PaginationNumeric;

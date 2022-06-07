@@ -100,11 +100,11 @@ function Products() {
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
-  const handleChangeCurrentPage = (currentPage) => {
+  const handleChangeCurrentPageCriteria = (currentPage) => {
     setPage(currentPage);
   };
 
-  const handleOrderBy = (event) => {
+  const handleOrderByCriteria = (event) => {
     setOrderBy(event.target.value);
     setOrder(order === 'ASC' ? 'DESC' : 'ASC');
   };
@@ -176,12 +176,12 @@ function Products() {
             <ProductsTable
               pagination={result.data?.fetchProducts?.pagination || data.fetchProducts.pagination}
               products={result.data?.fetchProducts?.results || data.fetchProducts.results}
-              handleOrderBy={handleOrderBy}
+              handleOrderByCriteria={handleOrderByCriteria}
             />
             <div className="mt-8">
               <PaginationNumeric
                 pagination={result.data?.fetchProducts?.pagination || data.fetchProducts.pagination}
-                handleChangeCurrentPage={handleChangeCurrentPage}
+                handleChangeCurrentPageCriteria={handleChangeCurrentPageCriteria}
               />
             </div>
           </div>

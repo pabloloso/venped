@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import Products from './ProductsTableItem';
 
-function ProductsTable({ pagination, products, handleOrderBy }) {
+function ProductsTable({ pagination, products, handleOrderByCriteria }) {
   return (
     <div className="bg-white shadow-lg rounded-sm border border-slate-200 relative">
       <header className="px-5 py-4">
@@ -23,8 +23,7 @@ function ProductsTable({ pagination, products, handleOrderBy }) {
                     className="w-full font-semibold text-left"
                     type="button"
                     value="id"
-                    onKeyDown={handleOrderBy}
-                    onClick={handleOrderBy}
+                    onClick={handleOrderByCriteria}
                   >
                     SKU
                   </button>
@@ -34,8 +33,7 @@ function ProductsTable({ pagination, products, handleOrderBy }) {
                     className="w-full font-semibold text-left"
                     type="button"
                     value="title"
-                    onKeyDown={handleOrderBy}
-                    onClick={handleOrderBy}
+                    onClick={handleOrderByCriteria}
                   >
                     Artículo
                   </button>
@@ -45,8 +43,7 @@ function ProductsTable({ pagination, products, handleOrderBy }) {
                     className="w-full font-semibold text-left"
                     type="button"
                     value="price"
-                    onKeyDown={handleOrderBy}
-                    onClick={handleOrderBy}
+                    onClick={handleOrderByCriteria}
                   >
                     Precio
                   </button>
@@ -56,8 +53,7 @@ function ProductsTable({ pagination, products, handleOrderBy }) {
                     className="w-full font-semibold text-left"
                     type="button"
                     value="tax"
-                    onKeyDown={handleOrderBy}
-                    onClick={handleOrderBy}
+                    onClick={handleOrderByCriteria}
                   >
                     Impuesto
                   </button>
@@ -67,8 +63,7 @@ function ProductsTable({ pagination, products, handleOrderBy }) {
                     className="w-full font-semibold text-left"
                     type="button"
                     value="stock"
-                    onKeyDown={handleOrderBy}
-                    onClick={handleOrderBy}
+                    onClick={handleOrderByCriteria}
                   >
                     Stock
                   </button>
@@ -115,7 +110,7 @@ ProductsTable.propTypes = {
     tax: PropTypes.string.isRequired,
     stock: PropTypes.number.isRequired,
   })).isRequired,
-  handleOrderBy: PropTypes.func.isRequired,
+  handleOrderByCriteria: PropTypes.func.isRequired,
 };
 
 export default ProductsTable;
