@@ -87,8 +87,8 @@ const prueba = gql`
 
 function Products() {
   const { loading, data } = useQuery(query);
+
   const [getProducts, result] = useLazyQuery(prueba);
-  const { loading: loadingResult } = result;
 
   const [page, setPage] = useState(1);
   const [filters, setFilters] = useState([]);
@@ -142,7 +142,7 @@ function Products() {
     getProducts({ variables: newRequest });
   }, [filters, order, orderBy, page, searchCriteria]);
 
-  if (loading || loadingResult) return 'Loading ....';
+  if (loading || result.loading) return 'Loading ....';
 
   return (
     <div className="flex h-screen overflow-hidden">
