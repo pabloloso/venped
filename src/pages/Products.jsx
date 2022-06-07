@@ -102,6 +102,12 @@ function Products() {
 
   const updateFiltersRequest = (selectedFilters) => {
     setFilters([...selectedFilters]);
+    setPage(1);
+  };
+
+  const searchProduct = (searchText) => {
+    setSearchCriteria(searchText);
+    setPage(1);
   };
 
   const getProductsUpdatedRequest = () => {
@@ -124,20 +130,6 @@ function Products() {
 
     getProductsUpdatedRequest();
   }, [filters, page, searchCriteria]);
-
-  useEffect(() => {
-    if (firstUpdate.current) {
-      firstUpdate.current = false;
-      return;
-    }
-
-    setPage(1);
-  }, [filters]);
-
-  const searchProduct = (searchText) => {
-    setSearchCriteria(searchText);
-    setPage(1);
-  };
 
   if (loading || loadingResult) return 'Loading ....';
 
