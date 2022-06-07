@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import Transition from '../utils/Transition';
 
-function DropdownFilter({ align, filters, updateFiltersRequest }) {
+function DropdownFilter({ align, filters, updateFiltersCriteria }) {
   const [selectedFilters, setSelectedFilters] = useState(filters.length > 0 ? filters : []);
 
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -55,7 +55,7 @@ function DropdownFilter({ align, filters, updateFiltersRequest }) {
   const handleApplyFilters = () => {
     setDropdownOpen(false);
 
-    updateFiltersRequest(selectedFilters);
+    updateFiltersCriteria(selectedFilters);
   };
 
   return (
@@ -179,7 +179,7 @@ function DropdownFilter({ align, filters, updateFiltersRequest }) {
 DropdownFilter.propTypes = {
   align: PropTypes.string.isRequired,
   filters: PropTypes.arrayOf(PropTypes.string).isRequired,
-  updateFiltersRequest: PropTypes.func.isRequired,
+  updateFiltersCriteria: PropTypes.func.isRequired,
 };
 
 export default DropdownFilter;

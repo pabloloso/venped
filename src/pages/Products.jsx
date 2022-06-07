@@ -90,6 +90,8 @@ function Products() {
 
   const [getProducts, result] = useLazyQuery(prueba);
 
+  const firstUpdate = useRef(true);
+
   const [page, setPage] = useState(1);
   const [filters, setFilters] = useState([]);
   const [searchCriteria, setSearchCriteria] = useState('');
@@ -113,17 +115,16 @@ function Products() {
     setPage(1);
   };
 
-  const updateFiltersRequest = (selectedFilters) => {
+  const updateFiltersCriteria = (selectedFilters) => {
     setFilters([...selectedFilters]);
     resetCriterias();
   };
 
-  const searchProduct = (searchText) => {
+  const updateSearchCriteria = (searchText) => {
     setSearchCriteria(searchText);
     resetCriterias();
   };
 
-  const firstUpdate = useRef(true);
   useEffect(() => {
     if (firstUpdate.current) {
       firstUpdate.current = false;
@@ -163,12 +164,12 @@ function Products() {
               </div>
               <div className="grid grid-flow-col sm:auto-cols-max justify-start sm:justify-end gap-2">
                 <SearchForm
-                  searchProduct={searchProduct}
+                  updateSearchCriteria={updateSearchCriteria}
                 />
                 <DropdownFilter
                   align="right"
                   filters={filters}
-                  updateFiltersRequest={updateFiltersRequest}
+                  updateFiltersCriteria={updateFiltersCriteria}
                 />
               </div>
             </div>

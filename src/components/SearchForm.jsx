@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
-function SearchForm({ searchProduct }) {
+function SearchForm({ updateSearchCriteria }) {
   const [searchText, setSearchText] = useState('');
 
   const handleUpdateSearchText = (event) => {
@@ -12,7 +12,7 @@ function SearchForm({ searchProduct }) {
     event.preventDefault();
 
     setSearchText('');
-    searchProduct(searchText);
+    updateSearchCriteria(searchText);
   };
 
   return (
@@ -37,7 +37,7 @@ function SearchForm({ searchProduct }) {
 }
 
 SearchForm.propTypes = {
-  searchProduct: PropTypes.func.isRequired,
+  updateSearchCriteria: PropTypes.func.isRequired,
 };
 
 export default SearchForm;
