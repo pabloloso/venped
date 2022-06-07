@@ -1,64 +1,141 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import { gql, useLazyQuery, useQuery } from '@apollo/client';
 
 import Sidebar from '../components/Sidebar';
 import Header from '../components/Header';
 import SearchForm from '../components/SearchForm';
-import FilterButton from '../components/DropdownFilter';
+import DropdownFilter from '../components/DropdownFilter';
 import ProductsTable from '../components/ProductsTable';
 import PaginationNumeric from '../components/PaginationNumeric';
 
+const query = gql`
+  query {
+    fetchProducts {
+      results(
+        page: 1,
+        perPage: 10
+      ) {
+        id,
+        title,
+        price,
+        tax,
+        stock
+      },
+      pagination(
+        page: 1,
+        perPage: 10
+      ) {
+        totalResults,
+        limitValue,
+        totalPages,
+        currentPage,
+        nextPage,
+        prevPage,
+        firstPage,
+        lastPage,
+        outOfRange
+      }
+    }
+  }
+`;
+
+const prueba = gql`
+  query FetchProducts (
+    $tax_filter: [String!],
+    $title_filter: String,
+    $order_by: String,
+    $order: String,
+    $page: Int!,
+    $per_page: Int!
+  ) {
+    fetchProducts {
+      results(
+        taxFilter: $tax_filter,
+        titleFilter: $title_filter,
+        orderBy: $order_by,
+        order: $order,
+        page: $page,
+        perPage: $per_page
+      ) {
+        id,
+        title,
+        price,
+        tax,
+        stock
+      },
+      pagination(
+        taxFilter: $tax_filter,
+        titleFilter: $title_filter,
+        orderBy: $order_by,
+        order: $order,
+        page: $page,
+        perPage: $per_page
+      ) {
+        totalResults,
+        limitValue,
+        totalPages,
+        currentPage,
+        nextPage,
+        prevPage,
+        firstPage,
+        lastPage,
+        outOfRange
+      }
+    }
+  }
+`;
+
 function Products() {
+  const { loading, data } = useQuery(query);
+  const [getProducts, result] = useLazyQuery(prueba);
+  const { loading: loadingResult } = result;
+
+  const [page, setPage] = useState(1);
+  const [filters, setFilters] = useState([]);
+
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
-  const [currentPage, setCurrentPage] = useState(1);
-
-  const [productsData, setProductsData] = useState([]);
-  const [paginationData, setPaginationData] = useState({});
-
-  useEffect(() => {
-    fetch('http://vps-123eb2fc.vps.ovh.net/graphql', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        query: `
-          query {
-            fetchProducts {
-              results(page: ${currentPage}, perPage: 10) { id, title, price, tax, stock },
-              pagination(page: ${currentPage}, perPage: 10) {
-                totalResults,
-                limitValue,
-                totalPages,
-                currentPage,
-                nextPage,
-                prevPage,
-                firstPage,
-                lastPage,
-                outOfRange
-              }
-            }
-          }
-      `,
-      }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        const { pagination, results } = data.data.fetchProducts;
-
-        setPaginationData(pagination);
-        setProductsData(results);
-      });
-  }, [currentPage]);
-
-  const handleChangeCurrentPage = (page) => {
-    console.log(page);
-    setCurrentPage(page);
+  const handleChangeCurrentPage = (currentPage) => {
+    setPage(currentPage);
   };
+
+  const updateFiltersRequest = (selectedFilters) => {
+    setFilters([...selectedFilters]);
+  };
+
+  const getProductsUpdatedRequest = () => {
+    const newRequest = {
+      ...filters.length > 0 && { tax_filter: filters },
+      page,
+      per_page: 10,
+    };
+
+    getProducts({ variables: newRequest });
+  };
+
+  const firstUpdate = useRef(true);
+  useEffect(() => {
+    if (firstUpdate.current) {
+      firstUpdate.current = false;
+      return;
+    }
+
+    getProductsUpdatedRequest();
+  }, [filters, page]);
+
+  if (loading || loadingResult) return 'Loading ....';
 
   return (
     <div className="flex h-screen overflow-hidden">
-      <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+      <Sidebar
+        sidebarOpen={sidebarOpen}
+        setSidebarOpen={setSidebarOpen}
+      />
       <div className="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
-        <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+        <Header
+          sidebarOpen={sidebarOpen}
+          setSidebarOpen={setSidebarOpen}
+        />
         <main>
           <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
             <div className="sm:flex sm:justify-between sm:items-center mb-5">
@@ -67,16 +144,20 @@ function Products() {
               </div>
               <div className="grid grid-flow-col sm:auto-cols-max justify-start sm:justify-end gap-2">
                 <SearchForm />
-                <FilterButton align="right" />
+                <DropdownFilter
+                  align="right"
+                  filters={filters}
+                  updateFiltersRequest={updateFiltersRequest}
+                />
               </div>
             </div>
             <ProductsTable
-              pagination={paginationData}
-              products={productsData}
+              pagination={result.data?.fetchProducts?.pagination || data.fetchProducts.pagination}
+              products={result.data?.fetchProducts?.results || data.fetchProducts.results}
             />
             <div className="mt-8">
               <PaginationNumeric
-                pagination={paginationData}
+                pagination={result.data?.fetchProducts?.pagination || data.fetchProducts.pagination}
                 handleChangeCurrentPage={handleChangeCurrentPage}
               />
             </div>

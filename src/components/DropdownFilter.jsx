@@ -1,26 +1,32 @@
+import propTypes from 'prop-types';
 import React, { useState, useRef, useEffect } from 'react';
+
 import Transition from '../utils/Transition';
 
-function DropdownFilter({
-  align,
-}) {
+function DropdownFilter({ align, filters, updateFiltersRequest }) {
+  const [selectedFilters, setSelectedFilters] = useState(filters.length > 0 ? filters : []);
+
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const trigger = useRef(null);
   const dropdown = useRef(null);
 
-  // close on click outside
   useEffect(() => {
     const clickHandler = ({ target }) => {
-      if (!dropdown.current) return;
-      if (!dropdownOpen || dropdown.current.contains(target) || trigger.current.contains(target)) return;
+      if (!dropdown.current) {
+        return;
+      }
+
+      if (!dropdownOpen || dropdown.current.contains(target) || trigger.current.contains(target)) {
+        return;
+      }
+
       setDropdownOpen(false);
     };
     document.addEventListener('click', clickHandler);
     return () => document.removeEventListener('click', clickHandler);
   });
 
-  // close if the esc key is pressed
   useEffect(() => {
     const keyHandler = ({ keyCode }) => {
       if (!dropdownOpen || keyCode !== 27) return;
@@ -30,9 +36,30 @@ function DropdownFilter({
     return () => document.removeEventListener('keydown', keyHandler);
   });
 
+  const handleSelectFilter = (event) => {
+    if (event.target.checked) {
+      setSelectedFilters([
+        ...selectedFilters,
+        event.target.value,
+      ]);
+      return;
+    }
+
+    setSelectedFilters(selectedFilters.filter((filter) => filter !== event.target.value));
+  };
+
+  const handleClearFilters = () => {
+    setSelectedFilters([]);
+  };
+
+  const handleApplyFilters = () => {
+    updateFiltersRequest(selectedFilters);
+  };
+
   return (
     <div className="relative inline-flex">
       <button
+        type="button"
         ref={trigger}
         className="btn bg-white border-slate-200 hover:border-slate-300 text-slate-500 hover:text-slate-600"
         aria-haspopup="true"
@@ -41,9 +68,7 @@ function DropdownFilter({
       >
         <span className="sr-only">Filter</span>
         <wbr />
-        <svg className="w-4 h-4 fill-current" viewBox="0 0 16 16">
-          <path d="M9 15H7a1 1 0 010-2h2a1 1 0 010 2zM11 11H5a1 1 0 010-2h6a1 1 0 010 2zM13 7H3a1 1 0 010-2h10a1 1 0 010 2zM15 3H1a1 1 0 010-2h14a1 1 0 010 2z" />
-        </svg>
+        Impuestos
       </button>
       <Transition
         show={dropdownOpen}
@@ -61,48 +86,85 @@ function DropdownFilter({
           <ul className="mb-4">
             <li className="py-1 px-3">
               <label className="flex items-center">
-                <input type="checkbox" className="form-checkbox" />
-                <span className="text-sm font-medium ml-2">Direct VS Indirect</span>
+                <input
+                  type="checkbox"
+                  className="form-checkbox"
+                  value="es_general_21"
+                  checked={selectedFilters.includes('es_general_21')}
+                  onChange={handleSelectFilter}
+                />
+                <span className="text-sm font-medium ml-2">ES General 21%</span>
               </label>
             </li>
             <li className="py-1 px-3">
               <label className="flex items-center">
-                <input type="checkbox" className="form-checkbox" />
-                <span className="text-sm font-medium ml-2">Real Time Value</span>
+                <input
+                  type="checkbox"
+                  className="form-checkbox"
+                  value="es_reduced_10"
+                  checked={selectedFilters.includes('es_reduced_10')}
+                  onChange={handleSelectFilter}
+                />
+                <span className="text-sm font-medium ml-2">ES Reducido 10%</span>
               </label>
             </li>
             <li className="py-1 px-3">
               <label className="flex items-center">
-                <input type="checkbox" className="form-checkbox" />
-                <span className="text-sm font-medium ml-2">Top Channels</span>
+                <input
+                  type="checkbox"
+                  className="form-checkbox"
+                  value="es_super-reduced_4"
+                  checked={selectedFilters.includes('es_super-reduced_4')}
+                  onChange={handleSelectFilter}
+                />
+                <span className="text-sm font-medium ml-2">ES Super Reducido 4%</span>
               </label>
             </li>
             <li className="py-1 px-3">
               <label className="flex items-center">
-                <input type="checkbox" className="form-checkbox" />
-                <span className="text-sm font-medium ml-2">Sales VS Refunds</span>
+                <input
+                  type="checkbox"
+                  className="form-checkbox"
+                  value="fr_general_20"
+                  checked={selectedFilters.includes('fr_general_20')}
+                  onChange={handleSelectFilter}
+                />
+                <span className="text-sm font-medium ml-2">FR General 20%</span>
               </label>
             </li>
             <li className="py-1 px-3">
               <label className="flex items-center">
-                <input type="checkbox" className="form-checkbox" />
-                <span className="text-sm font-medium ml-2">Last Order</span>
-              </label>
-            </li>
-            <li className="py-1 px-3">
-              <label className="flex items-center">
-                <input type="checkbox" className="form-checkbox" />
-                <span className="text-sm font-medium ml-2">Total Spent</span>
+                <input
+                  type="checkbox"
+                  className="form-checkbox"
+                  value="fr_reduced_5.5"
+                  checked={selectedFilters.includes('fr_reduced_5.5')}
+                  onChange={handleSelectFilter}
+                />
+                <span className="text-sm font-medium ml-2">FR Reducido 5,5%</span>
               </label>
             </li>
           </ul>
           <div className="py-2 px-3 border-t border-slate-200 bg-slate-50">
             <ul className="flex items-center justify-between">
               <li>
-                <button className="btn-xs bg-white border-slate-200 hover:border-slate-300 text-slate-500 hover:text-slate-600">Clear</button>
+                <button
+                  type="button"
+                  className="btn-xs bg-white border-slate-200 hover:border-slate-300 text-slate-500 hover:text-slate-600"
+                  onClick={handleClearFilters}
+                >
+                  Clear
+                </button>
               </li>
               <li>
-                <button className="btn-xs bg-blue-500 hover:bg-blue-600 text-white" onClick={() => setDropdownOpen(false)} onBlur={() => setDropdownOpen(false)}>Apply</button>
+                <button
+                  type="button"
+                  className="btn-xs bg-blue-500 hover:bg-blue-600 text-white"
+                  onClick={handleApplyFilters}
+                  onBlur={() => setDropdownOpen(false)}
+                >
+                  Apply
+                </button>
               </li>
             </ul>
           </div>
@@ -111,5 +173,11 @@ function DropdownFilter({
     </div>
   );
 }
+
+DropdownFilter.propTypes = {
+  align: propTypes.string.isRequired,
+  filters: propTypes.arrayOf([propTypes.string]).isRequired,
+  updateFiltersRequest: propTypes.func.isRequired,
+};
 
 export default DropdownFilter;

@@ -85,10 +85,11 @@ function PaginationNumeric({ pagination, handleChangeCurrentPage }) {
                   border
                   border-slate-200
                   text-slate-600
-                  hover:text-white ${
+                  hover:text-white
+                  ${
                     pagination.currentPage !== pagination.totalPages
                     && pagination.currentPage !== pagination.firstPage
-                    && 'bg-blue-500 text-white'
+                      && 'bg-blue-500 text-white'
                   }
                 `}
                 >
