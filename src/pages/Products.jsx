@@ -107,18 +107,20 @@ function Products() {
     setOrder(order === 'ASC' ? 'DESC' : 'ASC');
   };
 
-  const updateFiltersRequest = (selectedFilters) => {
-    setFilters([...selectedFilters]);
+  const resetCriterias = () => {
     setOrderBy('');
     setOrder('');
     setPage(1);
   };
 
+  const updateFiltersRequest = (selectedFilters) => {
+    setFilters([...selectedFilters]);
+    resetCriterias();
+  };
+
   const searchProduct = (searchText) => {
     setSearchCriteria(searchText);
-    setOrderBy('');
-    setOrder('');
-    setPage(1);
+    resetCriterias();
   };
 
   const firstUpdate = useRef(true);
@@ -131,8 +133,8 @@ function Products() {
     const newRequest = {
       ...filters.length > 0 && { tax_filter: filters },
       ...searchCriteria !== '' && { title_filter: searchCriteria },
-      ...order !== '' && { order },
       ...orderBy !== '' && { order_by: orderBy },
+      ...order !== '' && { order },
       page,
       per_page: 10,
     };
