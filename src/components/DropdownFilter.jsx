@@ -1,5 +1,5 @@
-import propTypes from 'prop-types';
 import React, { useState, useRef, useEffect } from 'react';
+import PropTypes from 'prop-types';
 
 import Transition from '../utils/Transition';
 
@@ -177,9 +177,9 @@ function DropdownFilter({ align, filters, updateFiltersRequest }) {
 }
 
 DropdownFilter.propTypes = {
-  align: propTypes.string.isRequired,
-  filters: propTypes.arrayOf(propTypes.string).isRequired,
-  updateFiltersRequest: propTypes.func.isRequired,
+  align: PropTypes.string.isRequired,
+  filters: PropTypes.arrayOf(PropTypes.string).isRequired,
+  updateFiltersRequest: PropTypes.func.isRequired,
 };
 
 export default DropdownFilter;

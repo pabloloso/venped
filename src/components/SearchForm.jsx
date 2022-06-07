@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import propTypes from 'prop-types';
+import PropTypes from 'prop-types';
 
 function SearchForm({ searchProduct }) {
   const [searchText, setSearchText] = useState('');
@@ -37,7 +37,7 @@ function SearchForm({ searchProduct }) {
 }
 
 SearchForm.propTypes = {
-  searchProduct: propTypes.func.isRequired,
+  searchProduct: PropTypes.func.isRequired,
 };
 
 export default SearchForm;

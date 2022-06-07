@@ -93,6 +93,8 @@ function Products() {
   const [page, setPage] = useState(1);
   const [filters, setFilters] = useState([]);
   const [searchCriteria, setSearchCriteria] = useState('');
+  const [orderBy, setOrderBy] = useState('');
+  const [order, setOrder] = useState('');
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
@@ -100,13 +102,22 @@ function Products() {
     setPage(currentPage);
   };
 
+  const handleOrderBy = (event) => {
+    setOrderBy(event.target.value);
+    setOrder(order === 'ASC' ? 'DESC' : 'ASC');
+  };
+
   const updateFiltersRequest = (selectedFilters) => {
     setFilters([...selectedFilters]);
+    setOrderBy('');
+    setOrder('');
     setPage(1);
   };
 
   const searchProduct = (searchText) => {
     setSearchCriteria(searchText);
+    setOrderBy('');
+    setOrder('');
     setPage(1);
   };
 
@@ -114,6 +125,8 @@ function Products() {
     const newRequest = {
       ...filters.length > 0 && { tax_filter: filters },
       ...searchCriteria !== '' && { title_filter: searchCriteria },
+      ...order !== '' && { order },
+      ...orderBy !== '' && { order_by: orderBy },
       page,
       per_page: 10,
     };
@@ -129,7 +142,7 @@ function Products() {
     }
 
     getProductsUpdatedRequest();
-  }, [filters, page, searchCriteria]);
+  }, [filters, order, orderBy, page, searchCriteria]);
 
   if (loading || loadingResult) return 'Loading ....';
 
@@ -164,6 +177,7 @@ function Products() {
             <ProductsTable
               pagination={result.data?.fetchProducts?.pagination || data.fetchProducts.pagination}
               products={result.data?.fetchProducts?.results || data.fetchProducts.results}
+              handleOrderBy={handleOrderBy}
             />
             <div className="mt-8">
               <PaginationNumeric

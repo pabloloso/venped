@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import Products from './ProductsTableItem';
 
-function ProductsTable({ pagination, products }) {
+function ProductsTable({ pagination, products, handleOrderBy }) {
   return (
     <div className="bg-white shadow-lg rounded-sm border border-slate-200 relative">
       <header className="px-5 py-4">
@@ -19,19 +19,59 @@ function ProductsTable({ pagination, products }) {
             <thead className="text-xs font-semibold uppercase text-slate-500 bg-slate-50 border-t border-b border-slate-200">
               <tr>
                 <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                  <div className="font-semibold text-left">SKU</div>
+                  <button
+                    className="w-full font-semibold text-left"
+                    type="button"
+                    value="id"
+                    onKeyDown={handleOrderBy}
+                    onClick={handleOrderBy}
+                  >
+                    SKU
+                  </button>
                 </th>
                 <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                  <div className="font-semibold text-left">Artículo</div>
+                  <button
+                    className="w-full font-semibold text-left"
+                    type="button"
+                    value="title"
+                    onKeyDown={handleOrderBy}
+                    onClick={handleOrderBy}
+                  >
+                    Artículo
+                  </button>
                 </th>
                 <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                  <div className="font-semibold text-left">Precio</div>
+                  <button
+                    className="w-full font-semibold text-left"
+                    type="button"
+                    value="price"
+                    onKeyDown={handleOrderBy}
+                    onClick={handleOrderBy}
+                  >
+                    Precio
+                  </button>
                 </th>
                 <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                  <div className="font-semibold text-left">Impuesto</div>
+                  <button
+                    className="w-full font-semibold text-left"
+                    type="button"
+                    value="tax"
+                    onKeyDown={handleOrderBy}
+                    onClick={handleOrderBy}
+                  >
+                    Impuesto
+                  </button>
                 </th>
                 <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                  <div className="font-semibold text-left">Stock</div>
+                  <button
+                    className="w-full font-semibold text-left"
+                    type="button"
+                    value="stock"
+                    onKeyDown={handleOrderBy}
+                    onClick={handleOrderBy}
+                  >
+                    Stock
+                  </button>
                 </th>
               </tr>
             </thead>
@@ -75,6 +115,7 @@ ProductsTable.propTypes = {
     tax: PropTypes.string.isRequired,
     stock: PropTypes.number.isRequired,
   })).isRequired,
+  handleOrderBy: PropTypes.func.isRequired,
 };
 
 export default ProductsTable;
