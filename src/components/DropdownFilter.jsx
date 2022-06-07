@@ -176,7 +176,7 @@ function DropdownFilter({ align, filters, updateFiltersRequest }) {
 
 DropdownFilter.propTypes = {
   align: propTypes.string.isRequired,
-  filters: propTypes.arrayOf([propTypes.string]).isRequired,
+  filters: propTypes.arrayOf(propTypes.string).isRequired,
   updateFiltersRequest: propTypes.func.isRequired,
 };
 

@@ -123,6 +123,15 @@ function Products() {
     getProductsUpdatedRequest();
   }, [filters, page]);
 
+  useEffect(() => {
+    if (firstUpdate.current) {
+      firstUpdate.current = false;
+      return;
+    }
+
+    setPage(1);
+  }, [filters]);
+
   if (loading || loadingResult) return 'Loading ....';
 
   return (
