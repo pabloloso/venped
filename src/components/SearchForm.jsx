@@ -1,10 +1,31 @@
-import React from 'react';
+import React, { useState } from 'react';
+import propTypes from 'prop-types';
 
-function SearchForm() {
+function SearchForm({ searchProduct }) {
+  const [searchText, setSearchText] = useState('');
+
+  const handleUpdateSearchText = (event) => {
+    setSearchText(event.target.value);
+  };
+
+  const handleSearchProduct = (event) => {
+    event.preventDefault();
+
+    setSearchText('');
+    searchProduct(searchText);
+  };
+
   return (
-    <form className="relative">
+    <form className="relative" onSubmit={handleSearchProduct}>
       <label htmlFor="action-search" className="sr-only">Buscar</label>
-      <input id="action-search" className="form-input pl-9 focus:border-slate-300" type="search" placeholder="Search" />
+      <input
+        id="action-search"
+        className="form-input pl-9 focus:border-slate-300"
+        type="search"
+        placeholder="Search"
+        value={searchText}
+        onChange={handleUpdateSearchText}
+      />
       <button className="absolute inset-0 right-auto group" type="submit" aria-label="Search">
         <svg className="w-4 h-4 shrink-0 fill-current text-slate-400 group-hover:text-slate-500 ml-3 mr-2" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
           <path d="M7 14c-3.86 0-7-3.14-7-7s3.14-7 7-7 7 3.14 7 7-3.14 7-7 7zM7 2C4.243 2 2 4.243 2 7s2.243 5 5 5 5-2.243 5-5-2.243-5-5-5z" />
@@ -14,5 +35,9 @@ function SearchForm() {
     </form>
   );
 }
+
+SearchForm.propTypes = {
+  searchProduct: propTypes.func.isRequired,
+};
 
 export default SearchForm;

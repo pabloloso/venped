@@ -53,6 +53,8 @@ function DropdownFilter({ align, filters, updateFiltersRequest }) {
   };
 
   const handleApplyFilters = () => {
+    setDropdownOpen(false);
+
     updateFiltersRequest(selectedFilters);
   };
 

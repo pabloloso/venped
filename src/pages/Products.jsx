@@ -92,6 +92,7 @@ function Products() {
 
   const [page, setPage] = useState(1);
   const [filters, setFilters] = useState([]);
+  const [searchCriteria, setSearchCriteria] = useState('');
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
@@ -106,6 +107,7 @@ function Products() {
   const getProductsUpdatedRequest = () => {
     const newRequest = {
       ...filters.length > 0 && { tax_filter: filters },
+      ...searchCriteria !== '' && { title_filter: searchCriteria },
       page,
       per_page: 10,
     };
@@ -121,7 +123,7 @@ function Products() {
     }
 
     getProductsUpdatedRequest();
-  }, [filters, page]);
+  }, [filters, page, searchCriteria]);
 
   useEffect(() => {
     if (firstUpdate.current) {
@@ -131,6 +133,11 @@ function Products() {
 
     setPage(1);
   }, [filters]);
+
+  const searchProduct = (searchText) => {
+    setSearchCriteria(searchText);
+    setPage(1);
+  };
 
   if (loading || loadingResult) return 'Loading ....';
 
@@ -152,7 +159,9 @@ function Products() {
                 <h1 className="text-2xl md:text-3xl text-slate-800 font-bold">Catálogo</h1>
               </div>
               <div className="grid grid-flow-col sm:auto-cols-max justify-start sm:justify-end gap-2">
-                <SearchForm />
+                <SearchForm
+                  searchProduct={searchProduct}
+                />
                 <DropdownFilter
                   align="right"
                   filters={filters}
