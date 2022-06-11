@@ -8,22 +8,34 @@ function ProductsTableItem({
   tax,
   stock,
 }) {
+  const stockIsEmpty = stock === 0;
+
   return (
     <tr>
       <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
         <div className="font-medium text-sky-500">{id}</div>
       </td>
       <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-        <div className="font-medium text-sky-500">{title}</div>
+        <div className="font-medium text-gray-500">{title}</div>
       </td>
       <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-        <div className="font-medium text-sky-500">{price}</div>
+        <div className="font-medium text-gray-500">{price}</div>
       </td>
       <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-        <div className="font-medium text-sky-500">{tax}</div>
+        <div className="rounded-full px-3 py-1 font-medium w-fit text-violet-600 bg-violet-200">{tax}</div>
       </td>
       <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-        <div className="font-medium text-sky-500">{stock}</div>
+        <div className={`
+          font-medium
+          rounded-full
+          w-fit
+          px-3
+          py-1
+          ${stockIsEmpty ? 'text-red-600 bg-red-200' : 'text-green-600 bg-green-200'}
+        `}
+        >
+          {stockIsEmpty ? 'Vacío' : stock}
+        </div>
       </td>
     </tr>
   );
