@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 
-import { useProducts } from '../graphql/products/custom-hooks';
+import { useProducts } from '../hooks/useProducts';
 
 import { DEFAULT_PER_PAGE, ORDER } from '../constants/filter';
 

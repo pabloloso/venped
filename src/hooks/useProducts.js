@@ -1,6 +1,6 @@
 import { useLazyQuery } from '@apollo/client';
 
-import { GET_PRODUCTS } from './graphql-queries';
+import { GET_PRODUCTS } from '../graphql/getProducts';
 
 export const useProducts = () => {
   const [getProducts, result] = useLazyQuery(GET_PRODUCTS);
