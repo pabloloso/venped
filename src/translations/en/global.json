@@ -1,0 +1,19 @@
+{
+  "products": "Products",
+  "article": "Article",
+  "price": "Price",
+  "tax": "Tax",
+  "stock": "Stock",
+  "search": "Search",
+  "pages": "Pages",
+  "filter": "Filter",
+  "filters": "Filters",
+  "taxes": "Taxes",
+  "clear": "Clear",
+  "apply": "Apply",
+  "results": "results",
+  "of": "of",
+  "to": "to",
+  "next": "Next",
+  "previous": "Previous"
+}

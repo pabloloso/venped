@@ -1,9 +1,12 @@
 import React, { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { useTranslation } from 'react-i18next';
 
 import Transition from '../utils/Transition';
 
 function DropdownFilter({ align, filters, updateFiltersCriteria }) {
+  const [t] = useTranslation('global');
+
   const [selectedFilters, setSelectedFilters] = useState(filters.length > 0 ? filters : []);
 
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -68,14 +71,29 @@ function DropdownFilter({ align, filters, updateFiltersCriteria }) {
         onClick={() => setDropdownOpen(!dropdownOpen)}
         aria-expanded={dropdownOpen}
       >
-        <span className="sr-only">Filter</span>
+        <span className="sr-only">{t('filter')}</span>
         <wbr />
-        Impuestos
+        {t('taxes')}
       </button>
       <Transition
         show={dropdownOpen}
         tag="div"
-        className={`origin-top-right z-10 absolute top-full min-w-56 bg-white border border-slate-200 pt-1.5 rounded shadow-lg overflow-hidden mt-1 ${align === 'right' ? 'right-0' : 'left-0'}`}
+        className={`
+          origin-top-right
+          z-10
+          absolute
+          top-full
+          min-w-56
+          bg-white
+          border
+          border-slate-200
+          pt-1.5
+          rounded
+          shadow-lg
+          overflow-hidden
+          mt-1
+          ${align === 'right' ? 'right-0' : 'left-0'}
+        `}
         enter="transition ease-out duration-200 transform"
         enterStart="opacity-0 -translate-y-2"
         enterEnd="opacity-100 translate-y-0"
@@ -84,7 +102,7 @@ function DropdownFilter({ align, filters, updateFiltersCriteria }) {
         leaveEnd="opacity-0"
       >
         <div ref={dropdown}>
-          <div className="text-xs font-semibold text-slate-400 uppercase pt-1.5 pb-2 px-4">Filters</div>
+          <div className="text-xs font-semibold text-slate-400 uppercase pt-1.5 pb-2 px-4">{t('filters')}</div>
           <ul className="mb-4">
             <li className="py-1 px-3">
               <label className="flex items-center">
@@ -155,7 +173,7 @@ function DropdownFilter({ align, filters, updateFiltersCriteria }) {
                   className="btn-xs bg-white border-slate-200 hover:border-slate-300 text-slate-500 hover:text-slate-600"
                   onClick={handleClearFilters}
                 >
-                  Clear
+                  {t('clear')}
                 </button>
               </li>
               <li>
@@ -165,7 +183,7 @@ function DropdownFilter({ align, filters, updateFiltersCriteria }) {
                   onClick={handleApplyFilters}
                   onBlur={() => setDropdownOpen(false)}
                 >
-                  Apply
+                  {t('apply')}
                 </button>
               </li>
             </ul>

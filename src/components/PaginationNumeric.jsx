@@ -1,7 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useTranslation } from 'react-i18next';
 
 function PaginationNumeric({ pagination, handleChangeCurrentPageCriteria }) {
+  const [t] = useTranslation('global');
+
   return (
     <>
       <div className="flex justify-center">
@@ -28,7 +31,7 @@ function PaginationNumeric({ pagination, handleChangeCurrentPageCriteria }) {
               disabled={pagination.firstPage}
               onClick={() => handleChangeCurrentPageCriteria(pagination.currentPage - 1)}
             >
-              <span className="sr-only">Previous</span>
+              <span className="sr-only">{t('previous')}</span>
               <wbr />
               <svg className="h-4 w-4 fill-current" viewBox="0 0 16 16">
                 <path d="M9.4 13.4l1.4-1.4-4-4 4-4-1.4-1.4L4 8z" />
@@ -156,7 +159,7 @@ function PaginationNumeric({ pagination, handleChangeCurrentPageCriteria }) {
               disabled={pagination.lastPage}
               onClick={() => handleChangeCurrentPageCriteria(pagination.currentPage + 1)}
             >
-              <span className="sr-only">Next</span>
+              <span className="sr-only">{t('next')}</span>
               <wbr />
               <svg className="h-4 w-4 fill-current" viewBox="0 0 16 16">
                 <path d="M6.6 13.4L5.2 12l4-4-4-4 1.4-1.4L12 8z" />
@@ -169,15 +172,15 @@ function PaginationNumeric({ pagination, handleChangeCurrentPageCriteria }) {
         <div className="text-sm text-slate-500 text-center sm:text-left py-2">
           <span className="font-medium text-slate-600">1</span>
           {' '}
-          a
+          {t('to')}
           {' '}
           <span className="font-medium text-slate-600">10</span>
           {' '}
-          de
+          {t('of')}
           {' '}
           <span className="font-medium text-slate-600">{pagination.totalResults}</span>
           {' '}
-          resultados
+          {t('results')}
         </div>
       </div>
     </>

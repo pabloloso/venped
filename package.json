@@ -12,11 +12,13 @@
     "chart.js": "^3.5.0",
     "chartjs-adapter-moment": "^1.0.0",
     "graphql": "^16.5.0",
+    "i18next": "^21.8.9",
     "moment": "^2.29.1",
     "prop-types": "^15.8.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-flatpickr": "^3.10.7",
+    "react-i18next": "^11.17.1",
     "react-router-dom": "^6.2.1",
     "react-transition-group": "^4.4.1"
   },

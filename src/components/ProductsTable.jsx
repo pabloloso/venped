@@ -1,14 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useTranslation } from 'react-i18next';
 
 import Products from './ProductsTableItem';
 
 function ProductsTable({ pagination, products, handleOrderByCriteria }) {
+  const [t] = useTranslation('global');
+
   return (
     <div className="bg-white shadow-lg rounded-sm border border-slate-200 relative">
       <header className="px-5 py-4">
         <h2 className="font-semibold text-slate-800">
-          Productos
+          {t('products')}
           {' '}
           <span className="text-slate-400 font-medium">{pagination.totalResults}</span>
         </h2>
@@ -35,7 +38,7 @@ function ProductsTable({ pagination, products, handleOrderByCriteria }) {
                     value="title"
                     onClick={handleOrderByCriteria}
                   >
-                    Artículo
+                    {t('article')}
                   </button>
                 </th>
                 <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
@@ -45,7 +48,7 @@ function ProductsTable({ pagination, products, handleOrderByCriteria }) {
                     value="price"
                     onClick={handleOrderByCriteria}
                   >
-                    Precio
+                    {t('price')}
                   </button>
                 </th>
                 <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
@@ -55,7 +58,7 @@ function ProductsTable({ pagination, products, handleOrderByCriteria }) {
                     value="tax"
                     onClick={handleOrderByCriteria}
                   >
-                    Impuesto
+                    {t('tax')}
                   </button>
                 </th>
                 <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
@@ -65,7 +68,7 @@ function ProductsTable({ pagination, products, handleOrderByCriteria }) {
                     value="stock"
                     onClick={handleOrderByCriteria}
                   >
-                    Stock
+                    {t('stock')}
                   </button>
                 </th>
               </tr>

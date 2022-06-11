@@ -1,0 +1,19 @@
+{
+  "products": "Productos",
+  "article": "Artículo",
+  "price": "Precio",
+  "tax": "Impuesto",
+  "stock": "Existencias",
+  "search": "Buscar",
+  "pages": "Páginas",
+  "filter": "Filtro",
+  "filters": "Filtros",
+  "taxes": "Impuestos",
+  "clear": "Limpiar",
+  "apply": "Aplicar",
+  "results": "resultados",
+  "of": "de",
+  "to": "a",
+  "next": "Siguiente",
+  "previous": "Anterior"
+}

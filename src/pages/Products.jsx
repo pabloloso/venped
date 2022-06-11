@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { useProducts } from '../hooks/useProducts';
 
@@ -12,6 +13,8 @@ import ProductsTable from '../components/ProductsTable';
 import PaginationNumeric from '../components/PaginationNumeric';
 
 function Products() {
+  const [t] = useTranslation('global');
+
   const {
     products,
     pagination,
@@ -91,7 +94,7 @@ function Products() {
           <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
             <div className="sm:flex sm:justify-between sm:items-center mb-5">
               <div className="mb-4 sm:mb-0">
-                <h1 className="text-2xl md:text-3xl text-slate-800 font-bold">Catálogo</h1>
+                <h1 className="text-2xl md:text-3xl text-slate-800 font-bold">{t('products')}</h1>
               </div>
               <div className="grid grid-flow-col sm:auto-cols-max justify-start sm:justify-end gap-2">
                 <SearchForm

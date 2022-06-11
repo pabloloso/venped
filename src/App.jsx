@@ -22,6 +22,7 @@ function App() {
   return (
     <Routes>
       <Route exact path="/" element={<Products />} />
+      <Route exact path="/products" element={<Products />} />
       <Route path="*" element={<PageNotFound />} />
     </Routes>
   );
