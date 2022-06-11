@@ -3,6 +3,12 @@
 @tailwind base;
 @tailwind components;
 
+@layer base {
+  :root {
+    --color-text-base: 'blue'
+  }
+}
+
 // Additional styles
 @import 'additional-styles/utility-patterns.scss';
 @import 'additional-styles/range-slider.scss';
