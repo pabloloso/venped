@@ -1,5 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { gql, useLazyQuery, useQuery } from '@apollo/client';
+
+import { useProducts } from '../graphql/products/custom-hooks';
+
+import { DEFAULT_PER_PAGE, ORDER } from '../constants/filter';
 
 import Sidebar from '../components/Sidebar';
 import Header from '../components/Header';
@@ -8,87 +11,13 @@ import DropdownFilter from '../components/DropdownFilter';
 import ProductsTable from '../components/ProductsTable';
 import PaginationNumeric from '../components/PaginationNumeric';
 
-const query = gql`
-  query {
-    fetchProducts {
-      results(
-        page: 1,
-        perPage: 10
-      ) {
-        id,
-        title,
-        price,
-        tax,
-        stock
-      },
-      pagination(
-        page: 1,
-        perPage: 10
-      ) {
-        totalResults,
-        limitValue,
-        totalPages,
-        currentPage,
-        nextPage,
-        prevPage,
-        firstPage,
-        lastPage,
-        outOfRange
-      }
-    }
-  }
-`;
-
-const prueba = gql`
-  query FetchProducts (
-    $tax_filter: [String!],
-    $title_filter: String,
-    $order_by: String,
-    $order: String,
-    $page: Int!,
-    $per_page: Int!
-  ) {
-    fetchProducts {
-      results(
-        taxFilter: $tax_filter,
-        titleFilter: $title_filter,
-        orderBy: $order_by,
-        order: $order,
-        page: $page,
-        perPage: $per_page
-      ) {
-        id,
-        title,
-        price,
-        tax,
-        stock
-      },
-      pagination(
-        taxFilter: $tax_filter,
-        titleFilter: $title_filter,
-        orderBy: $order_by,
-        order: $order,
-        page: $page,
-        perPage: $per_page
-      ) {
-        totalResults,
-        limitValue,
-        totalPages,
-        currentPage,
-        nextPage,
-        prevPage,
-        firstPage,
-        lastPage,
-        outOfRange
-      }
-    }
-  }
-`;
-
 function Products() {
-  const { loading, data } = useQuery(query);
-
-  const [getProducts, result] = useLazyQuery(prueba);
+  const {
+    products,
+    pagination,
+    loading,
+    getProducts,
+  } = useProducts();
 
   const firstUpdate = useRef(true);
 
@@ -106,7 +35,7 @@ function Products() {
 
   const handleOrderByCriteria = (event) => {
     setOrderBy(event.target.value);
-    setOrder(order === 'ASC' ? 'DESC' : 'ASC');
+    setOrder(order === ORDER.ASC ? ORDER.DESC : ORDER.ASC);
   };
 
   const resetCriterias = () => {
@@ -127,7 +56,9 @@ function Products() {
 
   useEffect(() => {
     if (firstUpdate.current) {
+      getProducts({ variables: { page, per_page: DEFAULT_PER_PAGE } });
       firstUpdate.current = false;
+
       return;
     }
 
@@ -137,13 +68,13 @@ function Products() {
       ...orderBy !== '' && { order_by: orderBy },
       ...order !== '' && { order },
       page,
-      per_page: 10,
+      per_page: DEFAULT_PER_PAGE,
     };
 
     getProducts({ variables: newRequest });
   }, [filters, order, orderBy, page, searchCriteria]);
 
-  if (loading || result.loading) return 'Loading ....';
+  if (loading) return 'Loading ....';
 
   return (
     <div className="flex h-screen overflow-hidden">
@@ -174,13 +105,13 @@ function Products() {
               </div>
             </div>
             <ProductsTable
-              pagination={result.data?.fetchProducts?.pagination || data.fetchProducts.pagination}
-              products={result.data?.fetchProducts?.results || data.fetchProducts.results}
+              pagination={pagination}
+              products={products}
               handleOrderByCriteria={handleOrderByCriteria}
             />
             <div className="mt-8">
               <PaginationNumeric
-                pagination={result.data?.fetchProducts?.pagination || data.fetchProducts.pagination}
+                pagination={pagination}
                 handleChangeCurrentPageCriteria={handleChangeCurrentPageCriteria}
               />
             </div>

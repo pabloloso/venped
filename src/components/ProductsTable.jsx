@@ -91,6 +91,11 @@ function ProductsTable({ pagination, products, handleOrderByCriteria }) {
   );
 }
 
+ProductsTable.defaultProps = {
+  pagination: {},
+  products: [],
+};
+
 ProductsTable.propTypes = {
   pagination: PropTypes.shape({
     currentPage: PropTypes.number,
@@ -102,14 +107,14 @@ ProductsTable.propTypes = {
     prevPage: PropTypes.number,
     totalPages: PropTypes.number,
     totalResults: PropTypes.number,
-  }).isRequired,
+  }),
   products: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    title: PropTypes.string.isRequired,
-    price: PropTypes.number.isRequired,
-    tax: PropTypes.string.isRequired,
-    stock: PropTypes.number.isRequired,
-  })).isRequired,
+    id: PropTypes.string,
+    title: PropTypes.string,
+    price: PropTypes.number,
+    tax: PropTypes.string,
+    stock: PropTypes.number,
+  })),
   handleOrderByCriteria: PropTypes.func.isRequired,
 };
 

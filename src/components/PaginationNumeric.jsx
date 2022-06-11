@@ -111,9 +111,10 @@ function PaginationNumeric({ pagination, handleChangeCurrentPageCriteria }) {
               </li>
             )}
 
-            <button type="button" onClick={() => handleChangeCurrentPageCriteria(pagination.totalPages)}>
-              <span
-                className={`
+            {pagination.totalPages > 1 && (
+              <button type="button" onClick={() => handleChangeCurrentPageCriteria(pagination.totalPages)}>
+                <span
+                  className={`
                   inline-flex
                   items-center
                   justify-center
@@ -127,10 +128,11 @@ function PaginationNumeric({ pagination, handleChangeCurrentPageCriteria }) {
                   text-slate-600
                   hover:text-white ${pagination.currentPage === pagination.totalPages && 'bg-blue-500 text-white'}
                 `}
-              >
-                {pagination.totalPages}
-              </span>
-            </button>
+                >
+                  {pagination.totalPages}
+                </span>
+              </button>
+            )}
           </ul>
           <div className="ml-2">
             <button
@@ -182,6 +184,10 @@ function PaginationNumeric({ pagination, handleChangeCurrentPageCriteria }) {
   );
 }
 
+PaginationNumeric.defaultProps = {
+  pagination: {},
+};
+
 PaginationNumeric.propTypes = {
   pagination: PropTypes.shape({
     currentPage: PropTypes.number,
@@ -193,7 +199,7 @@ PaginationNumeric.propTypes = {
     prevPage: PropTypes.number,
     totalPages: PropTypes.number,
     totalResults: PropTypes.number,
-  }).isRequired,
+  }),
   handleChangeCurrentPageCriteria: PropTypes.func.isRequired,
 };
 
