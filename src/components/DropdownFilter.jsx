@@ -113,7 +113,7 @@ function DropdownFilter({ align, filters, updateFiltersCriteria }) {
                   checked={selectedFilters.includes('es_general_21')}
                   onChange={handleSelectFilter}
                 />
-                <span className="text-sm font-medium ml-2">ES General 21%</span>
+                <span className="text-sm font-medium ml-2">{t('es_general_21')}</span>
               </label>
             </li>
             <li className="py-1 px-3">
@@ -125,7 +125,7 @@ function DropdownFilter({ align, filters, updateFiltersCriteria }) {
                   checked={selectedFilters.includes('es_reduced_10')}
                   onChange={handleSelectFilter}
                 />
-                <span className="text-sm font-medium ml-2">ES Reducido 10%</span>
+                <span className="text-sm font-medium ml-2">{t('es_general_10')}</span>
               </label>
             </li>
             <li className="py-1 px-3">
@@ -137,7 +137,7 @@ function DropdownFilter({ align, filters, updateFiltersCriteria }) {
                   checked={selectedFilters.includes('es_super-reduced_4')}
                   onChange={handleSelectFilter}
                 />
-                <span className="text-sm font-medium ml-2">ES Super Reducido 4%</span>
+                <span className="text-sm font-medium ml-2">{t('es_super-reduced_4')}</span>
               </label>
             </li>
             <li className="py-1 px-3">
@@ -149,7 +149,7 @@ function DropdownFilter({ align, filters, updateFiltersCriteria }) {
                   checked={selectedFilters.includes('fr_general_20')}
                   onChange={handleSelectFilter}
                 />
-                <span className="text-sm font-medium ml-2">FR General 20%</span>
+                <span className="text-sm font-medium ml-2">{t('fr_general_20')}</span>
               </label>
             </li>
             <li className="py-1 px-3">
@@ -161,7 +161,7 @@ function DropdownFilter({ align, filters, updateFiltersCriteria }) {
                   checked={selectedFilters.includes('fr_reduced_5.5')}
                   onChange={handleSelectFilter}
                 />
-                <span className="text-sm font-medium ml-2">FR Reducido 5,5%</span>
+                <span className="text-sm font-medium ml-2">{t('fr_reduced_5.5')}</span>
               </label>
             </li>
           </ul>

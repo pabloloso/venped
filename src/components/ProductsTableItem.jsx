@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useTranslation } from 'react-i18next';
 
 function ProductsTableItem({
   id,
@@ -8,6 +9,8 @@ function ProductsTableItem({
   tax,
   stock,
 }) {
+  const [t] = useTranslation('global');
+
   const stockIsEmpty = stock === 0;
 
   return (
@@ -22,7 +25,9 @@ function ProductsTableItem({
         <div className="font-medium text-gray-500">{price}</div>
       </td>
       <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-        <div className="rounded-full px-3 py-1 font-medium w-fit text-violet-600 bg-violet-200">{tax}</div>
+        <div className="rounded-full px-3 py-1 font-medium w-fit text-violet-600 bg-violet-200">
+          {t(tax)}
+        </div>
       </td>
       <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
         <div className={`
@@ -34,7 +39,7 @@ function ProductsTableItem({
           ${stockIsEmpty ? 'text-red-600 bg-red-200' : 'text-green-600 bg-green-200'}
         `}
         >
-          {stockIsEmpty ? 'Vacío' : stock}
+          {stockIsEmpty ? t('empty') : stock}
         </div>
       </td>
     </tr>

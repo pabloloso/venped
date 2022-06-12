@@ -15,5 +15,11 @@
   "of": "de",
   "to": "a",
   "next": "Siguiente",
-  "previous": "Anterior"
+  "previous": "Anterior",
+  "empty": "Vacío",
+  "es_general_21": "ES General 21%",
+  "es_reduced_10": "ES Reducido 10%",
+  "es_super-reduced_4": "ES Super reducido 4%",
+  "fr_general_20": "FR General 20%",
+  "fr_reduced_5.5": "FR Reducido 5,5%"
 }
