@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
-import Sidebar from '../../components/Sidebar';
-import Header from '../../components/Header';
+import Sidebar from '../components/Sidebar';
+import Header from '../components/Header';
 
-import NotFoundImage from '../../images/404-illustration.svg';
+import NotFoundImage from '../images/404-illustration.svg';
 
 function PageNotFound() {
   const [sidebarOpen, setSidebarOpen] = useState(false);

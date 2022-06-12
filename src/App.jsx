@@ -8,7 +8,7 @@ import {
 import './css/style.scss';
 
 import Products from './pages/Products';
-import PageNotFound from './pages/utility/PageNotFound';
+import PageNotFound from './pages/PageNotFound';
 
 function App() {
   const location = useLocation();
