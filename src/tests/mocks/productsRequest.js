@@ -1,3 +1,5 @@
+import { GET_PRODUCTS } from '../../graphql/getProducts';
+
 export const pagination = {
   currentPage: 20,
   firstPage: false,
@@ -29,3 +31,41 @@ export const products = [{
   tax: 'es_reduced_10',
   title: 'Aerodynamic Aluminum Pants',
 }];
+
+export const getProductsQueryMock = [
+  {
+    request: {
+      query: GET_PRODUCTS,
+      variables: {
+        page: 1,
+        per_page: 10,
+      },
+    },
+    result: {
+      data: {
+        fetchProducts: {
+          pagination: {
+            currentPage: 1,
+            firstPage: true,
+            lastPage: false,
+            limitValue: 10,
+            nextPage: 2,
+            outOfRange: false,
+            prevPage: null,
+            totalPages: 96,
+            totalResults: 953,
+            __typename: 'Pagination',
+          },
+          results: [{
+            id: '2',
+            price: 69.43,
+            stock: 21,
+            tax: 'es_general_21',
+            title: 'Lightweight Wooden Coat',
+            __typename: 'Product',
+          }],
+        },
+      },
+    },
+  },
+];
