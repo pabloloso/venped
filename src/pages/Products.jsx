@@ -77,8 +77,6 @@ function Products() {
     getProducts({ variables: newRequest });
   }, [filters, order, orderBy, page, searchCriteria]);
 
-  if (loading) return 'Loading ....';
-
   return (
     <div className="flex h-screen overflow-hidden">
       <Sidebar
@@ -107,17 +105,23 @@ function Products() {
                 />
               </div>
             </div>
-            <ProductsTable
-              pagination={pagination}
-              products={products}
-              handleOrderByCriteria={handleOrderByCriteria}
-            />
-            <div className="mt-8">
-              <PaginationNumeric
-                pagination={pagination}
-                handleChangeCurrentPageCriteria={handleChangeCurrentPageCriteria}
-              />
-            </div>
+            {loading ? (
+              <div>Loading ...</div>
+            ) : (
+              <>
+                <ProductsTable
+                  pagination={pagination}
+                  products={products}
+                  handleOrderByCriteria={handleOrderByCriteria}
+                />
+                <div className="mt-8">
+                  <PaginationNumeric
+                    pagination={pagination}
+                    handleChangeCurrentPageCriteria={handleChangeCurrentPageCriteria}
+                  />
+                </div>
+              </>
+            )}
           </div>
         </main>
       </div>
