@@ -125,7 +125,7 @@ function DropdownFilter({ align, filters, updateFiltersCriteria }) {
                   checked={selectedFilters.includes('es_reduced_10')}
                   onChange={handleSelectFilter}
                 />
-                <span className="text-sm font-medium ml-2">{t('es_general_10')}</span>
+                <span className="text-sm font-medium ml-2">{t('es_reduced_10')}</span>
               </label>
             </li>
             <li className="py-1 px-3">
